@@ -1,4 +1,4 @@
-import { NextPageContext } from 'next';
+import { NextPageContext, GetServerSideProps } from 'next';
 
 import { NextSeo } from 'next-seo';
 import { request, gql } from 'graphql-request';
@@ -6,9 +6,6 @@ import useSWR, { keyInterface } from 'swr';
 import { Button } from '@material-ui/core';
 import { RequestDocument } from 'graphql-request/dist/types';
 import Layout from '../components/Layout';
-
-const API = 'https://api.graph.cool/simple/v1/movies';
-const fetcher = (query: RequestDocument) => request(API, query);
 
 // https://dev.to/aryanjnyc/i-migrated-away-from-apollo-client-to-vercel-swr-and-prisma-graphql-request-and-you-can-too-245b
 // https://dev.to/ryanccn/data-fetching-with-next-js-38b6
@@ -83,28 +80,28 @@ export default function about() {
   );
 }
 
-export async function getServerSideProps() {
-  const API = 'https://api.graph.cool/simple/v1/movies';
+// export async function getServerSideProps() {
+//   const API = 'https://api.graph.cool/simple/v1/movies';
 
-  const data = await request(
-    API,
-    gql`
-      query movie {
-        Movie(title: "Inception") {
-          title
-          releaseDate
-          actors {
-            name
-          }
-        }
-      }
-    `
-  );
+//   const data = await request(
+//     API,
+//     gql`
+//       query movie {
+//         Movie(title: "Inception") {
+//           title
+//           releaseDate
+//           actors {
+//             name
+//           }
+//         }
+//       }
+//     `
+//   );
 
-  return {
-    props: { data }, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: { data }, // will be passed to the page component as props
+//   };
+// }
 
 /*
 import useSWR from 'swr'
