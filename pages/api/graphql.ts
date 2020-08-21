@@ -1,5 +1,5 @@
 import app, { server } from 'nexus';
-import '../../graphql/schema'; // we'll create this file in a second!
+import '../../graphql/schema';
 
 app.assemble();
 

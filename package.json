@@ -7,12 +7,10 @@
     "@material-ui/icons": "^4.9.1",
     "@types/prop-types": "^15.7.3",
     "clsx": "^1.1.1",
-    "graphql": "^15.3.0",
     "graphql-request": "^3.0.0",
     "graphql-tag": "^2.11.0",
     "jss-plugin-nested": "^10.4.0",
     "next": "latest",
-    "next-auth": "^3.1.0",
     "next-compose-plugins": "^2.2.0",
     "next-optimized-images": "^2.6.2",
     "next-seo": "^4.7.3",
@@ -24,9 +22,10 @@
     "swr": "^0.3.1"
   },
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
+    "dev:fe": "next",
+    "build:fe": "next build",
+    "start:fe": "next start",
+    "dev:be": "nexus dev",
     "deploy-app": "vercel",
     "update-app": "vercel --prod"
   },
