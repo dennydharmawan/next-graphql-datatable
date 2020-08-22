@@ -1,8 +1,14 @@
-import PropTypes, { InferProps } from 'prop-types';
 import Header from './Header';
 import { Grid, Container } from '@material-ui/core';
 
-function Layout({ children }: InferProps<typeof Layout.propTypes>) {
+type Renderable = React.ReactChild | Renderable[];
+
+type Props = {
+  children: ((x: number) => Renderable) | Renderable;
+};
+
+//https://stackoverflow.com/questions/59712851/react-typescript-function-component-typing
+const Layout: React.FC<Props> = ({ children }) => {
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12}>
@@ -17,10 +23,6 @@ function Layout({ children }: InferProps<typeof Layout.propTypes>) {
       </Grid>
     </Grid>
   );
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default Layout;

@@ -10,7 +10,7 @@ import { gqlFetcher } from '../lib/fetcher';
 
 import theme from '../lib/theme';
 
-function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -50,11 +50,6 @@ function App({ Component, pageProps }: AppProps) {
       </SWRConfig>
     </>
   );
-}
-
-App.propTypes = {
-  Component: PropTypes.func.isRequired,
-  pageProps: PropTypes.object.isRequired,
 };
 
 export default App;

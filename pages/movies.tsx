@@ -26,7 +26,11 @@ const movies: NextPage<Props> = ({ movies }) => {
   />;
 
   const API = 'https://api.graph.cool/simple/v1/movies';
-  const fetcher = (query: RequestDocument) => request(API, query);
+  const fetcher = async (query: RequestDocument) => {
+    console.log('fetching');
+    return request(API, query);
+  };
+
   const { data, error, isValidating, mutate } = useSWR(
     gql`
       {

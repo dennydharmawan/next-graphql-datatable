@@ -18,7 +18,6 @@
     "next-urql": "^1.1.0",
     "nexus": "^0.26.1",
     "nexus-plugin-prisma": "^0.17.0",
-    "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-is": "^16.13.1",
