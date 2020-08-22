@@ -5,6 +5,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { DefaultSeo } from 'next-seo';
 import { withUrqlClient, NextUrqlAppContext } from 'next-urql';
+import useSWR, { SWRConfig } from 'swr';
+import { gqlFetcher } from '../lib/fetcher';
 
 import theme from '../lib/theme';
 
@@ -34,11 +36,18 @@ function App({ Component, pageProps }: AppProps) {
         //   cardType: ‘summary_large_image’,
         // }}
       />
+      <SWRConfig
+        value={{
+          dedupingInterval: 1000,
+          fetcher: gqlFetcher,
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
 
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>{' '}
+      </SWRConfig>
     </>
   );
 }
@@ -48,16 +57,18 @@ App.propTypes = {
   pageProps: PropTypes.object.isRequired,
 };
 
-App.getInitialProps = async (ctx: NextUrqlAppContext) => {
-  const appProps = await NextApp.getInitialProps(ctx);
-  return { ...appProps };
-};
+export default App;
 
-const GRAPHQL_ENDPOINT = `http://localhost:3000/api/graphql`;
-export default withUrqlClient((_ssrExchange, _ctx) => ({
-  url: GRAPHQL_ENDPOINT,
-  fetch,
-}))(
-  // @ts-ignore
-  App
-);
+// App.getInitialProps = async (ctx: NextUrqlAppContext) => {
+//   const appProps = await NextApp.getInitialProps(ctx);
+//   return { ...appProps };
+// };
+
+// const GRAPHQL_ENDPOINT = `http://localhost:3000/api/graphql`;
+// export default withUrqlClient((_ssrExchange, _ctx) => ({
+//   url: GRAPHQL_ENDPOINT,
+//   fetch,
+// }))(
+//   // @ts-ignore
+//   App
+// );

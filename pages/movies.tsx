@@ -1,4 +1,4 @@
-import { NextPageContext, GetServerSideProps } from 'next';
+import { NextPageContext, GetServerSideProps, NextPage } from 'next';
 
 import { NextSeo } from 'next-seo';
 import { request, gql } from 'graphql-request';
@@ -11,7 +11,11 @@ import Layout from '../components/Layout';
 // https://dev.to/ryanccn/data-fetching-with-next-js-38b6
 //const { data, error, isValidating, mutate } = useSWR(key, fetcher, options)
 
-export default function about() {
+interface Props {
+  movies: object;
+}
+
+const movies: NextPage<Props> = ({ movies }) => {
   <NextSeo
     title="Movies"
     canonical={`${process.env.CANONICAL_URL}/about`}
@@ -35,16 +39,11 @@ export default function about() {
         }
       }
     ` as keyInterface,
-    fetcher
+    fetcher,
+    {
+      initialData: movies,
+    }
   );
-
-  // const JOB_POST_BY_ID_QUERY = `
-  //   query jobPostByIdQuery($id: String) {
-  //     jobPost(where: { id: $id }) {
-  //       id
-  //     }
-  //   }
-  // `;
 
   if (error) {
     console.log(error);
@@ -78,30 +77,32 @@ export default function about() {
       </Button>
     </Layout>
   );
-}
+};
 
-// export async function getServerSideProps() {
-//   const API = 'https://api.graph.cool/simple/v1/movies';
+export default movies;
 
-//   const data = await request(
-//     API,
-//     gql`
-//       query movie {
-//         Movie(title: "Inception") {
-//           title
-//           releaseDate
-//           actors {
-//             name
-//           }
-//         }
-//       }
-//     `
-//   );
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  const API = 'https://api.graph.cool/simple/v1/movies';
 
-//   return {
-//     props: { data }, // will be passed to the page component as props
-//   };
-// }
+  const movies = await request(
+    API,
+    gql`
+      query movie {
+        Movie(title: "Inception") {
+          title
+          releaseDate
+          actors {
+            name
+          }
+        }
+      }
+    `
+  );
+
+  return {
+    props: { movies }, // will be passed to the page component as props
+  };
+};
 
 /*
 import useSWR from 'swr'
